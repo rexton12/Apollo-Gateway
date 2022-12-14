@@ -2,8 +2,8 @@ subgraphs:
   TimeServices:
     routing_url: http://127.0.0.1:8000/
     schema:
-      file: C:/Users/RextonItsiah/Documents/GitHub/timelogs_system/time_logs_services/schema.graphql
+      file: C:/Users/RextonItsiah/Documents/GitHub/timelogs_system/time_logs_services/TimeService.graphql
   AuthenticationServices:
     routing_url: http://127.0.0.1:5050/
     schema:
-      file: C:/Users/RextonItsiah/Documents/GitHub/User_Authentication/schema.graphql
+      file: C:/Users/RextonItsiah/Documents/GitHub/timelogs_system/logs_authentication/AuthService.graphql

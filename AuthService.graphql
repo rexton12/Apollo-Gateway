@@ -1,0 +1,53 @@
+
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+   List: [employee]
+}
+
+type employee  {
+    id: ID @external
+    FullName: String
+    Email: String
+    Password: String
+    Department: String
+    CreatedAt: String
+}
+
+type Mutation {
+    CreateEmployee(input:AdminCreateEmployeeInput): employee
+    UserLogin(input:UserAuth): employee
+    AdminLogin(input:AdminAuth): admin
+    CreateAdmin(input:CreateAdmin): admin
+}
+
+input AdminCreateEmployeeInput {
+    FullName: String!
+    Department: String!
+    Email:String!
+    Password:String!
+}
+
+input UserAuth {
+    Email:String!
+    Password: String!
+}
+
+input AdminAuth  {
+    Email: String!
+    Password: String!
+}
+
+input CreateAdmin  {
+    Email: String!
+    Password: String!
+}
+
+type admin  {
+    Email: String!
+    Password: String!
+}

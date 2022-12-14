@@ -16,45 +16,59 @@ directive @join__owner(graph: join__Graph!) on INTERFACE | OBJECT
 
 directive @join__type(graph: join__Graph!, key: join__FieldSet) repeatable on INTERFACE | OBJECT
 
-input Find_user {
-  first_name: String
-  last_name: String
+input AdminAuth {
+  Email: String!
+  Password: String!
+}
+
+input AdminCreateEmployeeInput {
+  Department: String!
+  Email: String!
+  FullName: String!
+  Password: String!
+}
+
+input CreateAdmin {
+  Email: String!
+  Password: String!
+}
+
+input LogHistory {
+  FullName: String
 }
 
 type Mutation {
-  User_login(input: User_auth): user_login @join__field(graph: AUTHENTICATIONSERVICES)
-  createEmployee(input: UserCreateInput): employee @join__field(graph: AUTHENTICATIONSERVICES)
-  find_employee_historyLogs(input: logHistory): employee_logs @join__field(graph: TIMESERVICES)
-  input_employee_TimeIn(input: time_in): employee_logs @join__field(graph: TIMESERVICES)
-  input_employee_TimeOut(input: time_out): employee_logs @join__field(graph: TIMESERVICES)
-  list_employee(input: Find_user): employee @join__field(graph: AUTHENTICATIONSERVICES)
-}
-
-type Payload {
-  token: String
-  user: employee
+  AdminLogin(input: AdminAuth): admin @join__field(graph: AUTHENTICATIONSERVICES)
+  CreateAdmin(input: CreateAdmin): admin @join__field(graph: AUTHENTICATIONSERVICES)
+  CreateEmployee(input: AdminCreateEmployeeInput): employee @join__field(graph: AUTHENTICATIONSERVICES)
+  FindEmployeeHistoryLogs(input: LogHistory): employeeLogs @join__field(graph: TIMESERVICES)
+  InputEmployeeTimeIn(input: TimeIn): employeeLogs @join__field(graph: TIMESERVICES)
+  InputEmployeeTimeOut(input: TimeOut): employeeLogs @join__field(graph: TIMESERVICES)
+  UserLogin(input: UserAuth): employee @join__field(graph: AUTHENTICATIONSERVICES)
 }
 
 type Query {
-  find(id: ID!): employee! @join__field(graph: AUTHENTICATIONSERVICES)
-  getAllEmployee_history_logs: [employee_logs] @join__field(graph: TIMESERVICES)
-  list: employee! @join__field(graph: AUTHENTICATIONSERVICES)
-  setTimer: [employee_logs] @join__field(graph: TIMESERVICES)
+  GetAllEmployeeHistoryLogs: [employeeLogs] @join__field(graph: TIMESERVICES)
+  List: [employee] @join__field(graph: AUTHENTICATIONSERVICES)
+  SetTimer: [employeeLogs] @join__field(graph: TIMESERVICES)
 }
 
-input UserCreateInput {
-  email: String!
-  first_name: String!
-  gender: String!
-  last_name: String!
-  password: String!
-  position: String!
-  username: String!
+input TimeIn {
+  FullName: String
 }
 
-input User_auth {
-  email: String!
-  password: String!
+input TimeOut {
+  FullName: String
+}
+
+input UserAuth {
+  Email: String!
+  Password: String!
+}
+
+type admin {
+  Email: String!
+  Password: String!
 }
 
 enum core__Purpose {
@@ -70,25 +84,22 @@ enum core__Purpose {
 }
 
 type employee {
-  createdAt: String
-  email: String!
-  first_name: String
-  gender: String
-  id: ID!
-  last_name: String
-  password: String!
-  position: String
-  username: String
+  CreatedAt: String
+  Department: String
+  Email: String
+  FullName: String
+  Password: String
+  id: ID
 }
 
-type employee_logs {
-  full_name: String
-  history_log: String
+type employeeLogs {
+  FullName: String
+  HistoryLog: String
+  Indicators: String
+  Report: String
+  TimeIn: String
+  TimeOut: String
   id: ID
-  indicators: String
-  report: String
-  time_in: String
-  time_out: String
 }
 
 scalar join__FieldSet
@@ -96,21 +107,4 @@ scalar join__FieldSet
 enum join__Graph {
   AUTHENTICATIONSERVICES @join__graph(name: "AuthenticationServices" url: "http://127.0.0.1:5050/")
   TIMESERVICES @join__graph(name: "TimeServices" url: "http://127.0.0.1:8000/")
-}
-
-input logHistory {
-  full_name: String
-}
-
-input time_in {
-  full_name: String
-}
-
-input time_out {
-  full_name: String
-}
-
-type user_login {
-  email: String!
-  password: String!
 }
