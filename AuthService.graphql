@@ -9,13 +9,14 @@ type Query {
    List: [employee]
 }
 
-type employee  {
-    id: ID @external
+type employee @key(fields: "id") {
+    id: ID 
     FullName: String
     Email: String
     Password: String
     Department: String
     CreatedAt: String
+    employee_log: employeeLogs @provide(fields: "id")
 }
 
 type Mutation {
@@ -47,7 +48,7 @@ input CreateAdmin  {
     Password: String!
 }
 
-type admin  {
+type admin @key(fields: "Email") {
     Email: String!
     Password: String!
 }

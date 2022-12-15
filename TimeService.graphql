@@ -1,0 +1,38 @@
+ schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+   SetTimer: [employeeLogs]
+   GetAllEmployeeHistoryLogs: [employeeLogs]
+}
+
+type employeeLogs @key(fields: "id") @extends {
+    id:ID @external
+    FullName: String
+    TimeIn: String
+    TimeOut: String
+    Report: String
+    HistoryLog:String
+    Indicators: String
+}
+
+type Mutation {
+    InputEmployeeTimeIn(input:TimeIn): employeeLogs
+    InputEmployeeTimeOut(input:TimeOut): employeeLogs
+    FindEmployeeHistoryLogs(input:LogHistory): employeeLogs
+}
+
+input LogHistory {
+    FullName: String
+}
+
+input TimeIn {
+    FullName: String 
+}
+
+
+input TimeOut {
+    FullName: String 
+}
