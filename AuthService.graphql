@@ -17,6 +17,7 @@ type employee @key(fields: "id") {
     Department: String
     CreatedAt: String
     employee_log: employeeLogs @provide(fields: "id")
+    
 }
 
 type Mutation {

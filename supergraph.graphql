@@ -48,7 +48,7 @@ type Mutation {
 }
 
 type Query {
-  GetAllEmployeeHistoryLogs: [employeeLogs] @join__field(graph: TIMESERVICES)
+  GetAllEmployeeHistoryLogs: [employeeLogs] @join__field(graph: TIMESERVICES) 
   List: [employee] @join__field(graph: AUTHENTICATIONSERVICES)
   SetTimer: [employeeLogs] @join__field(graph: TIMESERVICES)
 }
@@ -90,6 +90,7 @@ type employee {
   FullName: String
   Password: String
   id: ID
+  
 }
 
 type employeeLogs {
@@ -100,6 +101,7 @@ type employeeLogs {
   TimeIn: String
   TimeOut: String
   id: ID
+  user: employee
 }
 
 scalar join__FieldSet
